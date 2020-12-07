@@ -1,0 +1,50 @@
+version: '3.5'
+services:
+    fpm:
+        user: www
+        build:
+            context : ./.docker/fpm
+        container_name: chinese_poetry_fpm
+        depends_on:
+            - db
+            # - redis
+        volumes:
+            - ./api:/var/www/html
+        expose:
+            - 9000
+    nginx:
+        restart: always
+        container_name:  chinese_poetry_nginx
+        working_dir: /var/www/html
+        build:
+          context: ./.docker/nginx
+          args:
+            - APP_HOST=${APP_HOST}
+        volumes:
+          - ./api:/var/www/html
+          - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+          - ./.docker/nginx/conf.d/:/etc/nginx/conf.d
+        ports:
+          - 8006:80
+        depends_on:
+          - fpm
+    db:
+        container_name: chinese_poetry_db
+        image: mysql:8.0
+        command: ['--default-authentication-plugin=mysql_native_password', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+        restart: always
+        environment: 
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        expose:
+            - 3306
+        ports: 
+            - 6050:3306
+    # redis: 
+    #     container_name: covid_19_data_laravel_redis
+    #     build:
+    #       context: ./.docker/redis
+    #     expose:
+    #       - 6379
