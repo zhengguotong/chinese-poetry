@@ -31,13 +31,13 @@ class PullPoetry extends Command
      *
      * @return void
      */
-    public function __construct(ITranslation $translateService, IPoetry $poetryRepository)
-    {
-        parent::__construct();
+    // public function __construct(ITranslation $translateService, IPoetry $poetryRepository)
+    // {
+    //     parent::__construct();
 
-        $this->translateService = $translateService;
-        $this->poetryRepository = $poetryRepository;
-    }
+    //     $this->translateService = $translateService;
+    //     $this->poetryRepository = $poetryRepository;
+    // }
 
     /**
      * Execute the console command.

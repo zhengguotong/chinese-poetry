@@ -36,7 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(IAuthor::class, AuthorRepository::class);
-        $this->app->bind(IPoetry::class, PoetryRepository::class);
-        $this->app->bind(IParagraph::class, ParagraphRepository::class);
+        // $this->app->bind(IPoetry::class, PoetryRepository::class);
+        // $this->app->bind(IParagraph::class, ParagraphRepository::class);
     }
 }
